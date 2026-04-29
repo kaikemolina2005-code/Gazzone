@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", sans-serif;
+  
+  --color-gazz-sand: #E5E1DB;
+  --color-gazz-cream: #F5F2ED;
+  --color-gazz-ink: #7a3166;
+  --color-primary: #7a3166;
+}
+
+@layer base {
+  @font-face {
+    font-family: 'Inter';
+    src: url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+  }
+  @font-face {
+    font-family: 'Outfit';
+    src: url('https://fonts.googleapis.com/css2?family=Outfit:wght@500;700&display=swap');
+  }
+  
+  body {
+    @apply text-gazz-ink font-sans;
+  }
+}
+
+@layer components {
+  .container-wide {
+    @apply max-w-[1440px] mx-auto px-4 md:px-8;
+  }
+}
