@@ -34,15 +34,7 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
         {/* Category Header */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 mb-16">
           <div className="relative h-[300px] rounded-3xl overflow-hidden bg-black flex items-center justify-center text-center px-6">
-            <div className="absolute inset-0 opacity-40 grayscale z-0">
-              <Image 
-                src={category.image} 
-                alt={category.name} 
-                fill 
-                className="object-cover"
-                referrerPolicy="no-referrer"
-              />
-            </div>
+            <div className="absolute inset-0 opacity-40 grayscale bg-[url('https://picsum.photos/seed/cat-bg/1200/400')] bg-cover bg-center"></div>
             <div className="relative z-10">
               <span className="text-xs font-bold tracking-[0.4em] uppercase text-brand-pink mb-4 block">Coleção</span>
               <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-white">{category.name}</h1>

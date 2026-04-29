@@ -6,7 +6,7 @@
 import { useState, KeyboardEvent } from 'react';
 import { Search, UserCircle, Phone, ShoppingBag } from 'lucide-react';
 
-export default function Header({ onLogoClick, onLoginClick, onSupportClick, onCartClick, onSearch }: { onLogoClick?: () => void, onLoginClick?: () => void, onSupportClick?: () => void, onCartClick?: () => void, onSearch?: (query: string) => void }) {
+export default function Header({ onLogoClick, onLoginClick, onSupportClick, onCartClick, onSearch, cartCount = 0 }: { onLogoClick?: () => void, onLoginClick?: () => void, onSupportClick?: () => void, onCartClick?: () => void, onSearch?: (query: string) => void, cartCount?: number }) {
   const [searchValue, setSearchValue] = useState('');
 
   const handleSearchSubmit = () => {
@@ -81,11 +81,14 @@ export default function Header({ onLogoClick, onLoginClick, onSupportClick, onCa
           <button onClick={onCartClick} className="flex items-center gap-2 group relative">
             <div className="relative">
               <ShoppingBag className="w-8 h-8 text-[#7a3166] transition-colors" />
-              <span className="absolute -top-1 -right-1 bg-[#7a3166] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-[#7a3166] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
             </div>
             <div className="text-left leading-[1.1] hidden lg:block uppercase font-bold text-[10px] tracking-tight">
               <p>Carrinho</p>
-              <p className="text-gray-500">R$ 0,00</p>
             </div>
           </button>
         </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { Product, PRODUCTS } from '@/lib/products';
+import { Product } from '@/lib/products';
 
 interface CartItem extends Product {
   quantity: number;
@@ -25,15 +25,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   // Load cart from localStorage on mount
   useEffect(() => {
     const loadCart = () => {
-      const savedCart = localStorage.getItem('llmodas-cart');
+      const savedCart = localStorage.getItem('elite-cart');
       if (savedCart) {
         try {
-          const parsed = JSON.parse(savedCart) as CartItem[];
-          // Validate items against current PRODUCTS to prevent stale/random data
-          const validCart = parsed.filter(item => 
-            PRODUCTS.some(p => p.id === item.id)
-          );
-          setCart(validCart);
+          const parsed = JSON.parse(savedCart);
+          setCart(parsed);
         } catch (e) {
           console.error('Failed to parse cart from localStorage', e);
         }
@@ -44,7 +40,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Save cart to localStorage on change
   useEffect(() => {
-    localStorage.setItem('llmodas-cart', JSON.stringify(cart));
+    localStorage.setItem('elite-cart', JSON.stringify(cart));
   }, [cart]);
 
   const addToCart = (product: Product, quantity: number = 1) => {

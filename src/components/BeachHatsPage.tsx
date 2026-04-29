@@ -11,9 +11,10 @@ import imgProdHat from './product_1.webp'; // Placeholder, using what's availabl
 
 interface BeachHatsPageProps {
   onBack: () => void;
+  onProductClick?: (product: Product) => void;
 }
 
-export default function BeachHatsPage({ onBack }: BeachHatsPageProps) {
+export default function BeachHatsPage({ onBack, onProductClick }: BeachHatsPageProps) {
   const products: Product[] = [
     {
       id: 'bh-1',
@@ -155,7 +156,7 @@ export default function BeachHatsPage({ onBack }: BeachHatsPageProps) {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: index * 0.05 }}
             >
-              <ProductCard product={product} />
+              <ProductCard product={product} onProductClick={onProductClick} />
             </motion.div>
           ))}
         </div>

@@ -11,9 +11,10 @@ import imgProdFishing from './product_4.webp'; // Using existing relevant image
 
 interface FishingProductsPageProps {
   onBack: () => void;
+  onProductClick?: (product: Product) => void;
 }
 
-export default function FishingProductsPage({ onBack }: FishingProductsPageProps) {
+export default function FishingProductsPage({ onBack, onProductClick }: FishingProductsPageProps) {
   const products: Product[] = [
     {
       id: 'fp-1',
@@ -130,7 +131,7 @@ export default function FishingProductsPage({ onBack }: FishingProductsPageProps
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: index * 0.05 }}
             >
-              <ProductCard product={product} />
+              <ProductCard product={product} onProductClick={onProductClick} />
             </motion.div>
           ))}
         </div>

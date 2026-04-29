@@ -12,9 +12,10 @@ import imgProd3 from './product_3.webp';
 
 interface PromotionsPageProps {
   onBack: () => void;
+  onProductClick?: (product: Product) => void;
 }
 
-export default function PromotionsPage({ onBack }: PromotionsPageProps) {
+export default function PromotionsPage({ onBack, onProductClick }: PromotionsPageProps) {
   const products: Product[] = [
     {
       id: 'promo-1',
@@ -139,7 +140,7 @@ export default function PromotionsPage({ onBack }: PromotionsPageProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
             >
-              <ProductCard product={product} />
+              <ProductCard product={product} onProductClick={onProductClick} />
             </motion.div>
           ))}
         </div>

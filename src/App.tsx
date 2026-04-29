@@ -19,14 +19,53 @@ import LoginPage from './components/LoginPage';
 import SupportPage from './components/SupportPage';
 import CartPage from './components/CartPage';
 import SearchResultsPage from './components/SearchResultsPage';
+import ProductDetailsPage from './components/ProductDetailsPage';
 import Footer from './components/Footer';
 import { ALL_PRODUCTS } from './constants';
-import { Product } from './types';
+import { Product, CartItem } from './types';
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<'home' | 'beach-hats' | 'fishing' | 'promotions' | 'login' | 'support' | 'cart' | 'search'>('home');
+  const [currentPage, setCurrentPage] = useState<'home' | 'beach-hats' | 'fishing' | 'promotions' | 'login' | 'support' | 'cart' | 'search' | 'product-details'>('home');
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<Product[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [cart, setCart] = useState<CartItem[]>([]);
+
+  const addToCart = (product: Product, quantity: number = 1) => {
+    setCart(prevCart => {
+      const existingItem = prevCart.find(item => item.id === product.id);
+      if (existingItem) {
+        return prevCart.map(item => 
+          item.id === product.id 
+            ? { ...item, quantity: item.quantity + quantity }
+            : item
+        );
+      }
+      return [...prevCart, { ...product, quantity }];
+    });
+    // Optional: show a notification or redirect to cart
+    goToCart();
+  };
+
+  const removeFromCart = (productId: string) => {
+    setCart(prevCart => prevCart.filter(item => item.id !== productId));
+  };
+
+  const updateQuantity = (productId: string, delta: number) => {
+    setCart(prevCart => prevCart.map(item => {
+      if (item.id === productId) {
+        const newQty = Math.max(1, item.quantity + delta);
+        return { ...item, quantity: newQty };
+      }
+      return item;
+    }));
+  };
+
+  const handleProductClick = (product: Product) => {
+    setSelectedProduct(product);
+    setCurrentPage('product-details');
+    window.scrollTo(0, 0);
+  };
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
@@ -82,34 +121,43 @@ export default function App() {
           onSupportClick={goToSupport} 
           onCartClick={goToCart} 
           onSearch={handleSearch}
+          cartCount={cart.reduce((acc, item) => acc + item.quantity, 0)}
         />
         <Navbar />
         <main className="flex-1">
           {currentPage === 'home' ? (
             <>
               <Hero />
-              <CuradoriaSection />
+              <CuradoriaSection onProductClick={handleProductClick} />
               <InstagramSection />
               <FullProductGrid 
                 onBeachHatsClick={goToBeachHats} 
                 onFishingClick={goToFishing}
                 onPromotionsClick={goToPromotions} 
+                onProductClick={handleProductClick}
               />
             </>
           ) : currentPage === 'beach-hats' ? (
-            <BeachHatsPage onBack={goToHome} />
+            <BeachHatsPage onBack={goToHome} onProductClick={handleProductClick} />
           ) : currentPage === 'fishing' ? (
-            <FishingProductsPage onBack={goToHome} />
+            <FishingProductsPage onBack={goToHome} onProductClick={handleProductClick} />
           ) : currentPage === 'promotions' ? (
-            <PromotionsPage onBack={goToHome} />
+            <PromotionsPage onBack={goToHome} onProductClick={handleProductClick} />
           ) : currentPage === 'login' ? (
             <LoginPage onBack={goToHome} />
           ) : currentPage === 'support' ? (
             <SupportPage onBack={goToHome} />
           ) : currentPage === 'cart' ? (
-            <CartPage onBack={goToHome} />
+            <CartPage 
+              onBack={goToHome} 
+              cartItems={cart} 
+              onRemove={removeFromCart} 
+              onUpdateQuantity={updateQuantity} 
+            />
+          ) : currentPage === 'search' ? (
+            <SearchResultsPage query={searchQuery} results={searchResults} onBack={goToHome} onProductClick={handleProductClick} />
           ) : (
-            <SearchResultsPage query={searchQuery} results={searchResults} onBack={goToHome} />
+            selectedProduct && <ProductDetailsPage product={selectedProduct} onBack={goToHome} onAddToCart={addToCart} />
           )}
         </main>
         <Footer />

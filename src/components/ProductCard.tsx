@@ -8,12 +8,16 @@ import { Product } from '../types';
 
 interface ProductCardProps {
   product: Product;
+  onProductClick?: (product: Product) => void;
   key?: string;
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product, onProductClick }: ProductCardProps) {
   return (
-    <div className="relative group">
+    <div 
+      className="relative group cursor-pointer"
+      onClick={() => onProductClick && onProductClick(product)}
+    >
       {/* Luz focal atrás do card (Efeito de brilho) */}
       <div className="absolute inset-0 bg-[#7a3166] opacity-0 group-hover:opacity-40 rounded-2xl blur-3xl transition-all duration-700 -z-10 scale-90 group-hover:scale-110" />
       

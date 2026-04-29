@@ -6,11 +6,9 @@ import { Star, ShoppingBag } from 'lucide-react';
 import { motion } from 'motion/react';
 import { Product, formatPrice } from '@/lib/products';
 import { useCart } from '@/context/CartContext';
-import { useRouter } from 'next/navigation';
 
 export const ProductCard = ({ product }: { product: Product }) => {
   const { addToCart } = useCart();
-  const router = useRouter();
   return (
     <motion.div 
       whileHover={{ y: -10 }}
@@ -30,27 +28,15 @@ export const ProductCard = ({ product }: { product: Product }) => {
               {product.category}
             </span>
           </div>
-          <div className="absolute bottom-4 left-4 right-4 flex flex-col gap-2 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-            <button 
-              onClick={(e) => {
-                e.preventDefault();
-                addToCart(product);
-                router.push('/cart');
-              }}
-              className="w-full bg-brand-accent text-white py-2.5 font-bold uppercase text-[10px] tracking-widest border border-brand-accent hover:bg-black hover:border-black transition-colors flex items-center justify-center gap-2 shadow-xl rounded"
-            >
-              <ShoppingBag size={14} /> Comprar
-            </button>
-            <button 
-              onClick={(e) => {
-                e.preventDefault();
-                addToCart(product);
-              }}
-              className="w-full bg-white text-black py-2.5 font-bold uppercase text-[10px] tracking-widest border border-black hover:bg-gray-100 transition-colors flex items-center justify-center shadow-xl rounded"
-            >
-              Adicionar ao Carrinho
-            </button>
-          </div>
+          <button 
+            onClick={(e) => {
+              e.preventDefault();
+              addToCart(product);
+            }}
+            className="absolute bottom-4 left-4 right-4 bg-white text-black py-3 font-bold uppercase text-xs tracking-widest opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 border border-black hover:bg-brand-accent hover:text-white hover:border-brand-accent flex items-center justify-center gap-2 shadow-xl"
+          >
+            <ShoppingBag size={14} /> Comprar
+          </button>
         </div>
       </Link>
       <div className="flex justify-between items-start">

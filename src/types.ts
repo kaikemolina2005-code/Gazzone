@@ -24,3 +24,7 @@ export interface Banner {
   image: string;
   link: string;
 }
+
+export interface CartItem extends Product {
+  quantity: number;
+}

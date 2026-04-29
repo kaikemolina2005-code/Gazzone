@@ -20,9 +20,10 @@ import imgProd6 from './product_6.webp';
 interface CarouselRowProps {
   title: string;
   products: Product[];
+  onProductClick?: (product: Product) => void;
 }
 
-function CarouselRow({ title, products }: CarouselRowProps) {
+function CarouselRow({ title, products, onProductClick }: CarouselRowProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: 'left' | 'right') => {
@@ -59,7 +60,7 @@ function CarouselRow({ title, products }: CarouselRowProps) {
         >
           {products.map(product => (
             <div key={product.id} className="min-w-[280px] md:min-w-[240px] snap-start">
-              <ProductCard product={product} />
+              <ProductCard product={product} onProductClick={onProductClick} />
             </div>
           ))}
         </div>
@@ -76,7 +77,7 @@ function CarouselRow({ title, products }: CarouselRowProps) {
   );
 }
 
-export default function FullProductGrid({ onBeachHatsClick, onFishingClick, onPromotionsClick }: { onBeachHatsClick?: () => void, onFishingClick?: () => void, onPromotionsClick?: () => void }) {
+export default function FullProductGrid({ onBeachHatsClick, onFishingClick, onPromotionsClick, onProductClick }: { onBeachHatsClick?: () => void, onFishingClick?: () => void, onPromotionsClick?: () => void, onProductClick?: (product: Product) => void }) {
   const row1Products: Product[] = [
     {
       id: 'r1-1',
@@ -394,11 +395,11 @@ export default function FullProductGrid({ onBeachHatsClick, onFishingClick, onPr
           </div>
         </div>
         
-        <CarouselRow title="Destaques Recomendados" products={row1Products} />
-        <CarouselRow title="Mais do Nosso Catálogo" products={row2Products} />
-        <CarouselRow title="" products={row3Products} />
+        <CarouselRow title="Destaques Recomendados" products={row1Products} onProductClick={onProductClick} />
+        <CarouselRow title="Mais do Nosso Catálogo" products={row2Products} onProductClick={onProductClick} />
+        <CarouselRow title="" products={row3Products} onProductClick={onProductClick} />
         <SecondaryBanner onBeachHatsClick={onBeachHatsClick} onFishingClick={onFishingClick} />
-        <CarouselRow title="Chapéus e Acessórios" products={row4Products} />
+        <CarouselRow title="Chapéus e Acessórios" products={row4Products} onProductClick={onProductClick} />
         <BottomBanner onPromotionsClick={onPromotionsClick} />
       </div>
     </section>

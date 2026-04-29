@@ -56,7 +56,7 @@ const infoBoxes = [
 
 import VerticalBanners from './VerticalBanners';
 
-export default function CuradoriaSection() {
+export default function CuradoriaSection({ onProductClick }: { onProductClick?: (product: Product) => void }) {
   const products: Product[] = [
     {
       id: '1',
@@ -141,7 +141,7 @@ export default function CuradoriaSection() {
           {/* Main Product Grid (3 cols for 2 rows = 6 items) */}
           <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {products.map(product => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product.id} product={product} onProductClick={onProductClick} />
             ))}
           </div>
           

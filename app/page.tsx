@@ -23,7 +23,7 @@ const Hero = () => {
 
       <div className="absolute inset-0 z-0">
         <Image 
-          src="/products/banner-1.jpg" 
+          src="/hero-bg.jpg" 
           alt="Hero Background" 
           fill 
           className="object-cover"
@@ -40,11 +40,11 @@ const Hero = () => {
           transition={{ duration: 0.8 }}
           className="max-w-2xl"
         >
-          <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-[0.9] mb-6 text-white">
+          <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-[0.9] mb-6 text-brand-dark">
             Mais estilo <br />
             <span className="text-brand-accent">pro seu dia</span>
           </h1>
-          <p className="text-xl text-white/90 mb-10 max-w-lg font-medium">
+          <p className="text-xl text-brand-dark/80 mb-10 max-w-lg font-medium">
             Tendências atuais com conforto e estilo. Descubra a coleção que redefine o seu guarda-roupa com elegância e leveza.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">

@@ -12,9 +12,10 @@ interface SearchResultsPageProps {
   query: string;
   results: Product[];
   onBack: () => void;
+  onProductClick?: (product: Product) => void;
 }
 
-export default function SearchResultsPage({ query, results, onBack }: SearchResultsPageProps) {
+export default function SearchResultsPage({ query, results, onBack, onProductClick }: SearchResultsPageProps) {
   return (
     <motion.div 
       initial={{ opacity: 0 }}
@@ -77,7 +78,7 @@ export default function SearchResultsPage({ query, results, onBack }: SearchResu
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05 }}
               >
-                <ProductCard product={product} />
+                <ProductCard product={product} onProductClick={onProductClick} />
               </motion.div>
             ))}
           </div>

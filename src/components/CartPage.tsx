@@ -5,24 +5,16 @@
 
 import { motion } from 'motion/react';
 import { ArrowLeft, ShoppingBag, Trash2, Plus, Minus, CreditCard, ShieldCheck } from 'lucide-react';
-import imgProd1 from './product_1.webp';
+import { CartItem } from '../types';
 
 interface CartPageProps {
   onBack: () => void;
+  cartItems: CartItem[];
+  onRemove: (id: string) => void;
+  onUpdateQuantity: (id: string, delta: number) => void;
 }
 
-export default function CartPage({ onBack }: CartPageProps) {
-  // Mock cart items
-  const cartItems = [
-    {
-      id: 'r1-1',
-      name: "Mochila Gazzone Street Black",
-      price: 159.90,
-      image: imgProd1,
-      quantity: 1
-    }
-  ];
-
+export default function CartPage({ onBack, cartItems, onRemove, onUpdateQuantity }: CartPageProps) {
   const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   return (
@@ -64,14 +56,27 @@ export default function CartPage({ onBack }: CartPageProps) {
                         
                         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                           <div className="flex items-center border border-gray-100 rounded-full bg-gray-50/50">
-                            <button className="p-2 hover:text-purple-600 transition-colors"><Minus className="w-4 h-4" /></button>
+                            <button 
+                              onClick={() => onUpdateQuantity(item.id, -1)}
+                              className="p-2 hover:text-purple-600 transition-colors"
+                            >
+                              <Minus className="w-4 h-4" />
+                            </button>
                             <span className="px-5 text-sm font-black text-gazz-ink">{item.quantity}</span>
-                            <button className="p-2 hover:text-purple-600 transition-colors"><Plus className="w-4 h-4" /></button>
+                            <button 
+                              onClick={() => onUpdateQuantity(item.id, 1)}
+                              className="p-2 hover:text-purple-600 transition-colors"
+                            >
+                              <Plus className="w-4 h-4" />
+                            </button>
                           </div>
                           
                           <div className="flex items-center gap-8">
-                            <p className="text-lg font-black text-gazz-ink">R$ {item.price.toFixed(2)}</p>
-                            <button className="p-3 text-gray-300 hover:text-red-500 transition-colors bg-red-50/0 hover:bg-red-50 rounded-xl">
+                            <p className="text-lg font-black text-gazz-ink">R$ {(item.price * item.quantity).toFixed(2).replace('.', ',')}</p>
+                            <button 
+                              onClick={() => onRemove(item.id)}
+                              className="p-3 text-gray-300 hover:text-red-500 transition-colors bg-red-50/0 hover:bg-red-50 rounded-xl"
+                            >
                               <Trash2 className="w-5 h-5" />
                             </button>
                           </div>
